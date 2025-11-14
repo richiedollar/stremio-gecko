@@ -130,8 +130,9 @@ mkdir -vp browser/branding/stremio-gecko/stubinstaller
 $SED -i -e 's|"MOZ_APP_VENDOR", ".*"|"MOZ_APP_VENDOR", "stremio-gecko Authors"|g' browser/moz.configure
 echo '' >>browser/moz.configure
 echo 'include("stremio-gecko.configure")' >>browser/moz.configure
-
 $SED -i -e 's/Fennec/stremio-gecko/g; s/Firefox/stremio-gecko/g' build/moz.configure/init.configure
+$SED -i -e 's/browser.ironfox./browser.stremio-gecko./g' services/settings/Utils.sys.mjs
+$SED -i -e 's/browser.ironfox./browser.stremio-gecko./g' toolkit/components/extensions/parent/ext-storage.js
 
 # Package policies
 echo '' >>browser/installer/package-manifest.in

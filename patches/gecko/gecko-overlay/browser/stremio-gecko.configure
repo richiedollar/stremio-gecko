@@ -5,6 +5,9 @@
 ## (Ex. we can't set `MOZ_SERVICES_HEALTHREPORT` to `False` and `MOZ_APP_VENDOR` to `stremio-gecko Authors` here) - We'll still need to drirectly modify the configure file directly for changes like this.
 ## BUT we can use this as a form of validation, to ensure that our changes are properly applied/working as expected - ex. if we set `MOZ_SERVICES_HEALTHREPORT` to `False` here, and the build fails - we'll know something went wrong with the prebuild script.
 
+# Disable crash reporting
+set_config("MOZ_CRASHREPORTER", False)
+
 # Disable Normandy (Experimentation)
 ## See the note at the top, we also configure this with our prebuild script
 imply_option("MOZ_NORMANDY", False)

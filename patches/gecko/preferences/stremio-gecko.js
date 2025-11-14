@@ -8,6 +8,7 @@ pref("app.update.url.manual", "https://github.com/richiedollar/stremio-gecko/rel
 pref("app.vendorURL", "https://github.com/richiedollar/stremio-gecko", locked);
 
 /// Configure uBlock Origin
+pref("browser.stremio-gecko.uBO.assetsBootstrapLocation", "https://raw.githubusercontent.com/richiedollar/stremio-gecko/main/uBlock/assets.json");
 pref("browser.stremio-gecko.uBO.autoCommentFilterTemplate", "{{url}}");
 pref("browser.stremio-gecko.uBO.autoUpdateDelayAfterLaunch", "10");
 pref("browser.stremio-gecko.uBO.disableWebAssembly", "true");
@@ -46,12 +47,16 @@ pref("devtools.remote.adb.extensionURL", "");
 
 /// Disable back-up/export of bookmarks
 pref("browser.bookmarks.autoExportHTML", false); // [DEFAULT]
-pref("browser.bookmarks.max_backups", 0);
+pref("browser.bookmarks.c", 0);
 
 /// Disable BackupService
 // https://searchfox.org/mozilla-central/source/browser/components/backup/content/debug.html
+pref("browser.backup.archive.enabled", false); // [DEFAULT]
 pref("browser.backup.enabled", false);
 pref("browser.backup.preferences.ui.enabled", false); // [DEFAULT]
+pref("browser.backup.restore.enabled", false); // [DEFAULT]
+pref("browser.backup.scheduled.enabled", false); // [DEFAULT]
+pref("browser.backup.scheduled.user-disabled", true);
 
 /// Disable the bookmarks toolbar
 pref("browser.toolbars.bookmarks.visibility", "never");
