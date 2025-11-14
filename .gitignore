@@ -1,2 +1,5 @@
 .DS_Store
-sources/
+/build
+/env
+/sources
+/scripts/env_local.sh

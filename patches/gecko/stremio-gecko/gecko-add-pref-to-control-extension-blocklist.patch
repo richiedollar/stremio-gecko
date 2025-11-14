@@ -1,0 +1,13 @@
+diff --git a/toolkit/components/enterprisepolicies/EnterprisePoliciesParent.sys.mjs b/toolkit/components/enterprisepolicies/EnterprisePoliciesParent.sys.mjs
+index 2bfec5537e..73efb368ac 100644
+--- a/toolkit/components/enterprisepolicies/EnterprisePoliciesParent.sys.mjs
++++ b/toolkit/components/enterprisepolicies/EnterprisePoliciesParent.sys.mjs
+@@ -415,7 +415,7 @@ EnterprisePoliciesManager.prototype = {
+       return true;
+     }
+     if (addon.id in ExtensionSettings) {
+-      if ("installation_mode" in ExtensionSettings[addon.id]) {
++      if ("installation_mode" in ExtensionSettings[addon.id] && Services.prefs.getBoolPref("browser.stremio-gecko.extensions.blocklist.enabled", true)) {
+         switch (ExtensionSettings[addon.id].installation_mode) {
+           case "blocked":
+             return false;

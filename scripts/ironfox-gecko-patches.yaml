@@ -1,0 +1,107 @@
+categories:
+  - name: "Dependency"
+    excerpt: "Changes that remove or replace proprietary or external dependencies."
+    description: >
+      These patches remove dependencies on closed-source or third-party services/libraries, replacing them with open-source
+      alternatives (where desired) to enhance transparency, privacy, and control over the software stack.
+
+  - name: "Mozilla"
+    excerpt: "Changes that remove and/or replace undesired Mozilla functionality."
+    description: >
+      These patches disable, remove, or replace unwanted Mozilla-related functionality from the browser. This includes
+      advertising, data collection, promotions, and other services not required for critical functionality.
+
+  - name: "Privacy"
+    excerpt: "Enhancements that improve user privacy and strengthen data protection."
+    description: >
+      This category includes patches that protect against various forms of tracking, as well as patches that limit
+      data exposure and reduce the browser's required permissions.
+
+  - name: "Security"
+    excerpt: "Patches that improve default security settings and reduce attack surfaces."
+    description: >
+      These patches tweak or enhance security-related settings and features, such as enabling HTTPS-only mode,
+      securing PDF handling, and reducing exposure to potentially dangerous web content.
+
+  - name: "User Interface"
+    excerpt: "Visual and interface customizations for branding and clarity."
+    description: >
+      UI-focused patches customize the appearance of the browser, introduce branding changes,
+      and simplify or declutter interface elements to enhance user clarity and recognition.
+
+patches:
+  # Dependency
+  - file: "gecko-remove-gmp-sources.patch"
+    name: "Remove GMP (Gecko Media Plugins) Sources"
+    description: "Removes Firefox's default sources for installing Gecko Media Plugins (GMP: https://wiki.mozilla.org/GeckoMediaPlugins), such as OpenH264 and Widevine (the latter is proprietary)."
+    reason: "To prevent the installation of unwanted/unnecessary plug-ins."
+    effect: "Improves security for users, by reducing attack surface, and protects freedom, by ensuring that proprietary plug-ins are not installed."
+    category: "Dependency"
+
+  # Mozilla
+  - file: "gecko-remove-abouttelemetry.patch"
+    name: "Remove `about:telemetry`"
+    description: "Removes the internal `about:telemetry` page."
+    reason: "To improve UX."
+    effect: "Prevents users from incorrectly believing telemetry is supported/enabled."
+    category: "Mozilla"
+
+  - file: "gecko-disable-nimbus.patch"
+    name: "Disable Nimbus Experimentation (Gecko)"
+    description: "Prevents A/B testing and remote configuration of settings via Nimbus within Gecko."
+    reason: "To reduce data collection and remove Mozilla's ability to remotely change browser settings."
+    effect: "Ensures user configurations remain consistent and are controlled locally."
+    category: "Mozilla"
+
+  - file: "gecko-rs-blocker.patch"
+    name: "Block Remote Settings (Gecko)"
+    description: "Restricts Remote Settings to only download collections specified in preferences."
+    reason: "To prevent the download/use of unnecessary and undesired Remote Settings from Mozilla (ex. for experimentation)."
+    effect: "Network activity is further limited, less data is shared with Mozilla, and the user is put in control of what specifically they want to download from Remote Settings."
+    category: "Mozilla"
+
+  - file: "gecko-remove-privileged-addon-signing-status.patch"
+    name: "Remove privileged add-on signing status"
+    description: "Prevents Mozilla add-ons from returning the 'PRIVILEGED' and 'SYSTEM' add-on signing states."
+    reason: "To improve privacy, security, and control for users, by preventing external add-ons developed By Mozilla from utilizing special privileged functionality."
+    effect: "Users have improved privacy, security, and control over their extensions."
+    category: "Mozilla"
+
+  # Privacy
+  - file: "gecko-configure-ublock-origin.patch"
+    name: "Configure uBlock Origin"
+    description: "Sets uBlock Origin to use a custom/enhanced config, and changes certain settings by default."
+    reason: "To provide stronger out-of-box content blocking."
+    effect: "Better ad and tracker blocking with optimized filter lists."
+    category: "Privacy"
+
+  - file: "gecko-disable-network-id.patch"
+    name: "Disable Network ID generation"
+    description: "Prevents Firefox from generating an internal network ID that could potentially be used to track users (https://gitlab.torproject.org/tpo/applications/tor-browser/-/commit/4c548fa04b668a310c90c0e783ec404420f06257)."
+    reason: "To prevent the browser from generating an ID that could be used for tracking/fingerprinting."
+    effect: "Protects users against tracking/fingerprinting."
+    category: "Privacy"
+
+  # Security
+  - file: "gecko-certificate-pinning.patch"
+    name: "Certificate Pinning"
+    description: |
+      Updates and expands the list of domains supported by Mozilla's built-in certificate pinning.
+    reason: "To protect against MITM attacks by restricting which certificate authorities can issue valid certificates for included websites. Example of a real-world attack that this protects against: https://blog.mozilla.org/security/2011/08/29/fraudulent-google-com-certificate/."
+    effect: "Users are provided with a more secure browsing experience."
+    category: "Security"
+
+  - file: "gecko-prevent-extensions-from-changing-browser-settings.patch"
+    name: "Prevent Extensions From Changing Browser Settings"
+    description: "Prevents extensions from changing various browser settings."
+    reason: "To prevent extensions from making unauthorized changes to browser settings."
+    effect: "Ensures browser settings aren't changed without explicit user consent."
+    category: "Security"
+
+  # User Interface
+  - file: "gecko-expose-hidden-aboutsupport-settings.patch"
+    name: "Expose hidden settings at `about:support`"
+    description: "Enables advanced options at `about:support`."
+    reason: "Allows users to kill the GPU process and reset GPU devices if necessary."
+    effect: "Users have more control over their web browser."
+    category: "User Interface"

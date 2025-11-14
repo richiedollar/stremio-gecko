@@ -1,0 +1,167 @@
+{
+  "data": [
+    {
+      "id": "96ad4fd9-4bbb-454d-bbe5-24225a2cbe04",
+      "last_modified": 1745933974542,
+      "locales": [
+        "af",
+        "an",
+        "ar",
+        "ast",
+        "az",
+        "be",
+        "bg",
+        "bn",
+        "bn-BD",
+        "bn-IN",
+        "br",
+        "bs",
+        "ca",
+        "ca-valencia",
+        "cak",
+        "cs",
+        "cy",
+        "da",
+        "de",
+        "dsb",
+        "el",
+        "en-CA",
+        "en-GB",
+        "en-US",
+        "eo",
+        "es-AR",
+        "es-CL",
+        "es-ES",
+        "es-MX",
+        "et",
+        "eu",
+        "fa",
+        "ff",
+        "fi",
+        "fr",
+        "fur",
+        "fy-NL",
+        "ga-IE",
+        "gd",
+        "gl",
+        "gn",
+        "gu-IN",
+        "he",
+        "hi-IN",
+        "hr",
+        "hsb",
+        "hu",
+        "hy-AM",
+        "ia",
+        "id",
+        "is",
+        "it",
+        "ja",
+        "ja-JP-macos",
+        "ka",
+        "kab",
+        "kk",
+        "km",
+        "kn",
+        "ko",
+        "lij",
+        "lo",
+        "lt",
+        "ltg",
+        "lv",
+        "mk",
+        "mr",
+        "ms",
+        "my",
+        "nb-NO",
+        "ne-NP",
+        "nl",
+        "nn-NO",
+        "oc",
+        "pa-IN",
+        "pl",
+        "pt-BR",
+        "pt-PT",
+        "rm",
+        "ro",
+        "ru",
+        "sc",
+        "sco",
+        "si",
+        "sk",
+        "sl",
+        "son",
+        "sq",
+        "sr",
+        "sv-SE",
+        "szl",
+        "ta",
+        "te",
+        "th",
+        "tl",
+        "tr",
+        "trs",
+        "uk",
+        "ur",
+        "uz",
+        "vi",
+        "wo",
+        "zh-CN",
+        "zh-TW"
+      ],
+      "recordType": "availableLocales",
+      "schema": 1745887776020
+    },
+    {
+      "globalDefault": "no-search",
+      "globalDefaultPrivate": "no-search",
+      "id": "f3891684-2348-4e7a-9765-0c5d2d0ab1b9",
+      "last_modified": 1702906502241,
+      "recordType": "defaultEngines",
+      "schema": 1702901837584
+    },
+    {
+      "base": {
+        "aliases": [
+          "no-search"
+        ],
+        "classification": "general",
+        "name": "No Search",
+        "urls": {
+          "search": {
+            "base": "https://nosearch.invalid/"
+          }
+        }
+      },
+      "id": "bad4f466-d074-41cb-b217-3810257c699e",
+      "identifier": "no-search",
+      "last_modified": 1718719100285,
+      "recordType": "engine",
+      "schema": 1718698362015,
+      "variants": [
+        {
+          "environment": {
+            "allRegionsAndLocales": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "3e1fed64-5ec7-4b1c-bedc-741fe3c59bc3",
+      "last_modified": 1707833224345,
+      "orders": [
+        {
+          "environment": {
+            "allRegionsAndLocales": true
+          },
+          "order": [
+            "no-search"
+          ]
+        }
+      ],
+      "recordType": "engineOrders",
+      "schema": 1707824831520
+    }
+  ],
+  "timestamp": 1761573989454
+}

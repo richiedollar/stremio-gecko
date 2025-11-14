@@ -1,0 +1,41 @@
+# -*- Mode: python; indent-tabs-mode: nil; tab-width: 40 -*-
+# vim: set filetype=python:
+
+# NOTE: Unfortunately, we can't redefine options here that were implied to a different value at `mobile/android/moz.configure` here.
+## (Ex. we can't set `MOZ_SERVICES_HEALTHREPORT` to `False` and `MOZ_APP_VENDOR` to `stremio-gecko Authors` here) - We'll still need to drirectly modify the configure file directly for changes like this.
+## BUT we can use this as a form of validation, to ensure that our changes are properly applied/working as expected - ex. if we set `MOZ_SERVICES_HEALTHREPORT` to `False` here, and the build fails - we'll know something went wrong with the prebuild script.
+
+# Disable Normandy (Experimentation)
+## See the note at the top, we also configure this with our prebuild script
+imply_option("MOZ_NORMANDY", False)
+
+# Disable printing
+set_config("MOZ_PDF_PRINTING", False)
+set_define("MOZ_PDF_PRINTING", False)
+
+# Disable smart cards
+set_config("MOZ_NO_SMART_CARDS", True)
+set_define("MOZ_NO_SMART_CARDS", True)
+
+# Disable telemetry
+## See the note at the top, we also configure this with our prebuild script
+imply_option("MOZ_SERVICES_HEALTHREPORT", False)
+set_config("MOZ_DATA_REPORTING", False)
+set_define("MOZ_DATA_REPORTING", False)
+set_define("MOZ_TELEMETRY_ON_BY_DEFAULT", False)
+set_define("MOZ_TELEMETRY_REPORTING", False)
+
+# Ensure UA is set to Firefox
+imply_option("MOZ_APP_UA_NAME", "Firefox")
+
+# Make it stremio-gecko...
+## See the note at the top, we also configure this with our prebuild script
+imply_option("MOZ_APP_VENDOR", "stremio-gecko Authors")
+
+# Stub Glean
+## On Android, Glean is managed by a separate/external library
+## Of course, this separate/external library does not exist on Desktop
+## So this effectively tricks Firefox into stubbing Glean...
+## https://searchfox.org/firefox-main/rev/77b6c974/toolkit/components/glean/docs/dev/preferences.md#69
+set_config("MOZ_GLEAN_ANDROID", True)
+set_define("MOZ_GLEAN_ANDROID", True)

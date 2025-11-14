@@ -1,0 +1,50 @@
+diff --git a/netwerk/system/linux/nsNetworkLinkService.cpp b/netwerk/system/linux/nsNetworkLinkService.cpp
+index 442d252b8f..36f35fd10d 100644
+--- a/netwerk/system/linux/nsNetworkLinkService.cpp
++++ b/netwerk/system/linux/nsNetworkLinkService.cpp
+@@ -50,11 +50,11 @@ nsNetworkLinkService::GetLinkType(uint32_t* aLinkType) {
+ 
+ NS_IMETHODIMP
+ nsNetworkLinkService::GetNetworkID(nsACString& aNetworkID) {
+-  if (!mNetlinkSvc) {
+-    return NS_ERROR_NOT_AVAILABLE;
+-  }
++//  if (!mNetlinkSvc) {
++//    return NS_ERROR_NOT_AVAILABLE;
++//  }
+ 
+-  mNetlinkSvc->GetNetworkID(aNetworkID);
++  aNetworkID.Truncate();
+   return NS_OK;
+ }
+ 
+diff --git a/netwerk/system/mac/nsNetworkLinkService.mm b/netwerk/system/mac/nsNetworkLinkService.mm
+index 6289c48122..06b06f00ee 100644
+--- a/netwerk/system/mac/nsNetworkLinkService.mm
++++ b/netwerk/system/mac/nsNetworkLinkService.mm
+@@ -129,8 +129,8 @@ nsNetworkLinkService::GetLinkType(uint32_t* aLinkType) {
+ 
+ NS_IMETHODIMP
+ nsNetworkLinkService::GetNetworkID(nsACString& aNetworkID) {
+-  MutexAutoLock lock(mMutex);
+-  aNetworkID = mNetworkId;
++//  MutexAutoLock lock(mMutex);
++  aNetworkID.Truncate();
+   return NS_OK;
+ }
+ 
+diff --git a/netwerk/system/win32/nsNotifyAddrListener.cpp b/netwerk/system/win32/nsNotifyAddrListener.cpp
+index 82939a85aa..da2f1a2c81 100644
+--- a/netwerk/system/win32/nsNotifyAddrListener.cpp
++++ b/netwerk/system/win32/nsNotifyAddrListener.cpp
+@@ -111,8 +111,8 @@ nsNotifyAddrListener::GetLinkType(uint32_t* aLinkType) {
+ 
+ NS_IMETHODIMP
+ nsNotifyAddrListener::GetNetworkID(nsACString& aNetworkID) {
+-  MutexAutoLock lock(mMutex);
+-  aNetworkID = mNetworkId;
++//  MutexAutoLock lock(mMutex);
++  aNetworkID.Truncate();
+   return NS_OK;
+ }
+ 

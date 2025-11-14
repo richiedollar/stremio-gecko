@@ -1,0 +1,43 @@
+categories:
+  - name: "Mozilla"
+    excerpt: "Changes that remove and/or replace undesired Mozilla functionality."
+    description: >
+      These patches disable, remove, or replace unwanted Mozilla-related functionality from the browser. This includes
+      advertising, data collection, promotions, and other services not required for critical functionality.
+
+  - name: "Privacy"
+    excerpt: "Enhancements that improve user privacy and strengthen data protection."
+    description: >
+      This category includes patches that protect against various forms of tracking, as well as patches that limit
+      data exposure and reduce the browser's required permissions.
+
+  - name: "User Control"
+    excerpt: "Unlocking advanced settings and configuration options for power users."
+    description: >
+      Focused on user empowerment, these patches provide access to advanced or hidden configuration options
+      such as about:config or secret developer settings to allow deeper browser customization.
+
+patches:
+  # Mozilla
+  - file: "gecko-remove-normandy.patch"
+    name: "Remove Normandy"
+    description: "Prevents A/B testing and remote configuration of settings via Normandy within Gecko."
+    reason: "To reduce data collection and remove Mozilla's ability to remotely change browser settings."
+    effect: "Ensures user configurations remain consistent and are controlled locally."
+    category: "Mozilla"
+
+  # Privacy
+  - file: "gecko-disable-network-id-cont.patch"
+    name: "Disable Network ID generation for Desktop platforms"
+    description: "Prevents Firefox from generating an internal network ID that could potentially be used to track users (https://gitlab.torproject.org/tpo/applications/tor-browser/-/commit/4c548fa04b668a310c90c0e783ec404420f06257)."
+    reason: "To prevent the browser from generating an ID that could be used for tracking/fingerprinting."
+    effect: "Protects users against tracking/fingerprinting."
+    category: "Privacy"
+
+  # User Control
+  - file: "gecko-add-pref-to-control-extension-blocklist.patch"
+    name: "Add a preference to control the internal add-on blocklist"
+    description: "Allows users to enable or disable our internal blocklist of malicious/sketchy/undesirable extensions."
+    reason: "To allow users to disable the add-on blocklist if desired."
+    effect: "Users remain in control over their experience."
+    category: "User Control"

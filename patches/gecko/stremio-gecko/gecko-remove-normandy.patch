@@ -1,0 +1,13 @@
+diff --git a/toolkit/components/moz.build b/toolkit/components/moz.build
+index 89be70ba12..2c9eed4889 100644
+--- a/toolkit/components/moz.build
++++ b/toolkit/components/moz.build
+@@ -136,7 +136,7 @@ if CONFIG["MOZ_WIDGET_TOOLKIT"] not in ("android", "windows"):
+     DIRS += ["aboutwebauthn"]
+ 
+ if CONFIG["MOZ_BUILD_APP"] == "browser":
+-    DIRS += ["messaging-system", "normandy"]
++    DIRS += ["messaging-system"]
+ 
+ DIRS += ["nimbus"]
+ 

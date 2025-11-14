@@ -1,0 +1,47 @@
+diff --git a/docshell/base/nsAboutRedirector.cpp b/docshell/base/nsAboutRedirector.cpp
+index 625640eef4..7622f81a26 100644
+--- a/docshell/base/nsAboutRedirector.cpp
++++ b/docshell/base/nsAboutRedirector.cpp
+@@ -211,9 +211,9 @@ static const RedirEntry kRedirMap[] = {
+ #  endif
+          nsIAboutModule::ALLOW_SCRIPT},
+ #endif
+-    {"telemetry", "chrome://global/content/aboutTelemetry.xhtml",
+-     nsIAboutModule::ALLOW_SCRIPT | nsIAboutModule::IS_SECURE_CHROME_UI},
+-#ifndef MOZ_WIDGET_ANDROID
++//    {"telemetry", "chrome://global/content/aboutTelemetry.xhtml",
++//     nsIAboutModule::ALLOW_SCRIPT | nsIAboutModule::IS_SECURE_CHROME_UI},
++#ifdef MOZ_WIDGET_ANDROID
+     {"translations",
+      "chrome://global/content/translations/about-translations.html",
+      nsIAboutModule::ALLOW_SCRIPT |
+diff --git a/docshell/build/components.conf b/docshell/build/components.conf
+index 06f1d0a26e..bb0326a360 100644
+--- a/docshell/build/components.conf
++++ b/docshell/build/components.conf
+@@ -29,7 +29,7 @@ about_pages = [
+     'serviceworkers',
+     'srcdoc',
+     'support',
+-    'telemetry',
++#    'telemetry',
+     'url-classifier',
+     'webrtc',
+ ]
+diff --git a/toolkit/content/jar.mn b/toolkit/content/jar.mn
+index 75c1c06efe..835ff83cc7 100644
+--- a/toolkit/content/jar.mn
++++ b/toolkit/content/jar.mn
+@@ -39,9 +39,9 @@ toolkit.jar:
+    content/global/aboutGlean.html
+    content/global/aboutGlean.css
+ #endif
+-   content/global/aboutTelemetry.js
+-   content/global/aboutTelemetry.xhtml
+-   content/global/aboutTelemetry.css
++#   content/global/aboutTelemetry.js
++#   content/global/aboutTelemetry.xhtml
++#   content/global/aboutTelemetry.css
+    content/global/aboutUrlClassifier.js
+    content/global/aboutUrlClassifier.xhtml
+    content/global/aboutUrlClassifier.css

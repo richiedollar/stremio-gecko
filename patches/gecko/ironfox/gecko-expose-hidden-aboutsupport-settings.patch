@@ -1,0 +1,22 @@
+diff --git a/toolkit/content/aboutSupport.js b/toolkit/content/aboutSupport.js
+index 2e1ab53362..5b90fc03c7 100644
+--- a/toolkit/content/aboutSupport.js
++++ b/toolkit/content/aboutSupport.js
+@@ -551,7 +551,7 @@ var snapshotFormatters = {
+ 
+     if (gpuProcessPid != -1) {
+       let gpuProcessKillButton = null;
+-      if (AppConstants.NIGHTLY_BUILD || AppConstants.MOZ_DEV_EDITION) {
++      if (true) {
+         gpuProcessKillButton = $.new("button");
+ 
+         gpuProcessKillButton.addEventListener("click", function () {
+@@ -571,7 +571,7 @@ var snapshotFormatters = {
+     }
+ 
+     if (
+-      (AppConstants.NIGHTLY_BUILD || AppConstants.MOZ_DEV_EDITION) &&
++      (true) &&
+       AppConstants.platform != "macosx"
+     ) {
+       let gpuDeviceResetButton = $.new("button");
