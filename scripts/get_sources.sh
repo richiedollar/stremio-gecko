@@ -150,20 +150,72 @@ download_and_extract() {
 
 mkdir -vp "$BUILDDIR"
 
+# Download CSS we borrow from Neutron
+echo "Downloading Neutron CSS..."
+## Neutron is a weird case - they don't have proper versioning, so we just specify the commit here
+
+## Shared
+download "https://github.com/gamingdoom/neutron/raw/$NEUTRON_REVISION/src/changed/browser/themes/shared/webRTC-indicator.css" "$NEUTRONDIR/browser/themes/shared/webRTC-indicator.css"
+
+## Linux
+download "https://github.com/gamingdoom/neutron/raw/$NEUTRON_REVISION/src/changed/browser/themes/linux/browser.css" "$NEUTRONDIR/browser/themes/linux/browser.css"
+download "https://github.com/gamingdoom/neutron/raw/$NEUTRON_REVISION/src/changed/browser/themes/linux/webRTC-indicator.css" "$NEUTRONDIR/browser/themes/linux/webRTC-indicator.css"
+
+## macOS
+download "https://github.com/gamingdoom/neutron/raw/$NEUTRON_REVISION/src/changed/browser/themes/osx/browser.css" "$NEUTRONDIR/browser/themes/osx/browser.css"
+download "https://github.com/gamingdoom/neutron/raw/$NEUTRON_REVISION/src/changed/browser/themes/osx/webRTC-indicator.css" "$NEUTRONDIR/browser/themes/osx/webRTC-indicator.css"
+
+## Windows
+download "https://github.com/gamingdoom/neutron/raw/$NEUTRON_REVISION/src/changed/browser/themes/windows/browser.css" "$NEUTRONDIR/browser/themes/windows/browser.css"
+download "https://github.com/gamingdoom/neutron/raw/$NEUTRON_REVISION/src/changed/browser/themes/windows/webRTC-indicator.css" "$NEUTRONDIR/browser/themes/windows/webRTC-indicator.css"
+
+# Download patches/resources we borrow from IronFox
+download "https://gitlab.com/ironfox-oss/IronFox/-/raw/$IRONFOX_VERSION/patches/gecko-certificate-pinning.patch" "$IRONFOXPATCHDIR/gecko-certificate-pinning.patch"
+download "https://gitlab.com/ironfox-oss/IronFox/-/raw/$IRONFOX_VERSION/patches/gecko-configure-ublock-origin.patch" "$IRONFOXPATCHDIR/gecko-configure-ublock-origin.patch"
+download "https://gitlab.com/ironfox-oss/IronFox/-/raw/$IRONFOX_VERSION/patches/gecko-disable-network-id.patch" "$IRONFOXPATCHDIR/gecko-disable-network-id.patch"
+download "https://gitlab.com/ironfox-oss/IronFox/-/raw/$IRONFOX_VERSION/patches/gecko-disable-nimbus.patch" "$IRONFOXPATCHDIR/gecko-disable-nimbus.patch"
+download "https://gitlab.com/ironfox-oss/IronFox/-/raw/$IRONFOX_VERSION/patches/gecko-expose-hidden-aboutsupport-settings.patch" "$IRONFOXPATCHDIR/gecko-expose-hidden-aboutsupport-settings.patch"
+download "https://gitlab.com/ironfox-oss/IronFox/-/raw/$IRONFOX_VERSION/patches/gecko-prevent-extensions-from-changing-browser-settings.patch" "$IRONFOXPATCHDIR/gecko-prevent-extensions-from-changing-browser-settings.patch"
+download "https://gitlab.com/ironfox-oss/IronFox/-/raw/$IRONFOX_VERSION/patches/gecko-remove-abouttelemetry.patch" "$IRONFOXPATCHDIR/gecko-remove-abouttelemetry.patch"
+download "https://gitlab.com/ironfox-oss/IronFox/-/raw/$IRONFOX_VERSION/patches/gecko-remove-gmp-sources.patch" "$IRONFOXPATCHDIR/gecko-remove-gmp-sources.patch"
+download "https://gitlab.com/ironfox-oss/IronFox/-/raw/$IRONFOX_VERSION/patches/gecko-remove-privileged-addon-signing-status.patch" "$IRONFOXPATCHDIR/gecko-remove-privileged-addon-signing-status.patch"
+download "https://gitlab.com/ironfox-oss/IronFox/-/raw/$IRONFOX_VERSION/patches/gecko-rs-blocker.patch" "$IRONFOXPATCHDIR/gecko-rs-blocker.patch"
+download "https://gitlab.com/ironfox-oss/IronFox/-/raw/$IRONFOX_VERSION/patches/locales" "$IRONFOXPATCHDIR/locales"
+download "https://gitlab.com/ironfox-oss/IronFox/-/raw/$IRONFOX_VERSION/patches/machrc" "$IRONFOXPATCHDIR/machrc"
+download "https://gitlab.com/ironfox-oss/IronFox/-/raw/$IRONFOX_VERSION/patches/preferences/pdf.js" "$IRONFOXDIR/preferences/pdf.js"
+
+# Download Phoenix
+echo "Downloading Phoenix..."
+
+## Linux
+download "https://gitlab.com/celenityy/Phoenix/-/raw/$PHOENIX_TAG/linux/defaults/pref/phoenix-desktop.js" "$PHOENIXDIR/phoenix-linux.js"
+download "https://gitlab.com/celenityy/Phoenix/-/raw/$PHOENIX_TAG/unused/linux/phoenix-extended.js" "$PHOENIXDIR/phoenix-extended-linux.js"
+
+## macOS
+download "https://gitlab.com/celenityy/Phoenix/-/raw/$PHOENIX_TAG/unused/macos/phoenix.js" "$PHOENIXDIR/phoenix-macos.js"
+download "https://gitlab.com/celenityy/Phoenix/-/raw/$PHOENIX_TAG/unused/macos/phoenix-extended.js" "$PHOENIXDIR/phoenix-extended-macos.js"
+
+## Windows
+download "https://gitlab.com/celenityy/Phoenix/-/raw/$PHOENIX_TAG/unused/windows/phoenix.js" "$PHOENIXDIR/phoenix-windows.js"
+download "https://gitlab.com/celenityy/Phoenix/-/raw/$PHOENIX_TAG/unused/windows/phoenix-extended.js" "$PHOENIXDIR/phoenix-extended-windows.js"
+
 # Clone Firefox
 echo "Cloning Firefox..."
-clone_repo "https://github.com/mozilla-firefox/firefox" "$GECKODIR" "${FIREFOX_RELEASE_TAG}"
-
-# Clone Neutron
+clone_repo "https://github.com/mozilla-firefox/firefox.git" "$GECKODIR" "${FIREFOX_RELEASE_TAG}"
 
 # Write env_local.sh
 echo "Writing ${ENV_SH}..."
 cat > "$ENV_SH" << EOF
-export patches=${PATCHDIR}
-export sources=${SOURCESDIR}
 export rootdir=${ROOTDIR}
 export builddir="${BUILDDIR}"
-export mozilla_release=${GECKODIR}
+export patches=${PATCHDIR}
+export sources=${SOURCESDIR}
+export gecko=${GECKODIR}
+export gecko_patches=${GECKOPATCHDIR}
+export ironfox=${IRONFOXDIR}
+export ironfox_patches=${IRONFOXPATCHDIR}
+export neutron=${NEUTRONDIR}
+export phoenix=${PHOENIXDIR}
 
 source "\$rootdir/scripts/env_common.sh"
 EOF

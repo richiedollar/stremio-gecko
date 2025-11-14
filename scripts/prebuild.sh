@@ -58,7 +58,7 @@ mkdir -vp "$rootdir/build"
 # Check patch files
 source "$rootdir/scripts/patches.sh"
 
-pushd "$mozilla_release"
+pushd "$gecko"
 if ! ironfox_gecko_check_patches; then
     echo "Patch validation failed. Please check the patch files and try again."
     exit 1
@@ -77,45 +77,36 @@ else
     curl --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -sSf https://sh.rustup.rs | sh -s -- -y --no-update-default-toolchain
 fi
 
-# shellcheck disable=SC1090,SC1091
 source "$CARGO_HOME/env"
 rustup default "$RUST_VERSION"
-rustup target add thumbv7neon-linux-androideabi
-rustup target add armv7-linux-androideabi
-rustup target add aarch64-linux-android
-rustup target add i686-linux-android
-rustup target add x86_64-linux-android
+rustup target add aarch64-unknown-linux-gnu
+rustup target add aarch64-apple-darwin
+rustup target add x86_64-unknown-linux-gnu
+rustup target add x86_64-apple-darwin
+rustup target add x86_64-pc-windows-msvc
 cargo install --vers "$CBINDGEN_VERSION" cbindgen
 
 # Set up target parameters
 case "$1" in
-arm)
-    # APK for armeabi-v7a
-    abi='"armeabi-v7a"'
-    target=arm-linux-androideabi
-    llvmtarget="ARM"
-    rusttarget=arm
+arm64-linux)
+    phoenixplatform=linux
+    target=aarch64-unknown-linux-gnu
     ;;
-x86_64)
-    # APK for x86_64
-    abi='"x86_64"'
-    target=x86_64-linux-android
-    llvmtarget="X86_64"
-    rusttarget=x86_64
+arm64-macos)
+    phoenixplatform=macos
+    target=aarch64-apple-darwin
     ;;
-arm64)
-    # APK for arm64-v8a
-    abi='"arm64-v8a"'
-    target=aarch64-linux-android
-    llvmtarget="AArch64"
-    rusttarget=arm64
+x86_64-linux)
+    phoenixplatform=linux
+    target=x86_64-unknown-linux-gnu
     ;;
-bundle)
-    # AAB for both armeabi-v7a and arm64-v8a
-    abi='"arm64-v8a", "armeabi-v7a", "x86_64"'
-    target=''
-    llvmtarget="AArch64;ARM;X86_64"
-    rusttarget='arm64,arm,x86_64'
+x86_64-macos)
+    phoenixplatform=macos
+    target=x86_64-apple-darwin
+    ;;
+x86_64-windows)
+    phoenixplatform=windows
+    target=x86_64-pc-windows-msvc
     ;;
 *)
     echo "Unknown build variant: '$1'" >&2
@@ -124,7 +115,7 @@ bundle)
 esac
 
 # Gecko
-pushd "$mozilla_release"
+pushd "$gecko"
 
 # Apply patches
 ironfox_gecko_apply_patches
@@ -424,16 +415,17 @@ source "$rootdir/scripts/noop_mozilla_endpoints.sh"
 } >>mozconfig
 
 {
-    cat "$sources/phoenix/phoenix.js"
-    cat "$sources/phoenix/phoenix-extended.js"
-    cat "$patches/gecko/preferences/stremio-gecko.js"
+    cat "$phoenix/phoenix-$phoenixplatform.js"
+    cat "$phoenix/phoenix-extended-$phoenixplatform.js"
+    cat "$gecko_patches/preferences/stremio-gecko.js"
 } >>browser/app/profile/firefox.js
 
 {
-    cat "$patches/gecko/preferences/pdf.js"
+    cat "$ironfox/preferences/pdf.js"
 } >>toolkit/components/pdfjs/PdfJsOverridePrefs.js
 
 # Apply Gecko overlay
-apply_overlay "$patches/gecko-overlay/"
+apply_overlay "$gecko_patches/gecko-overlay/"
+apply_overlay "$neutron/"
 
 popd

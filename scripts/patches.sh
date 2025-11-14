@@ -17,7 +17,7 @@ IRONFOX_GECKO_PATCH_FILES=($(yq '.patches[].file' "$(dirname "$0")"/ironfox-patc
 STREMIO_GECKO_PATCH_FILES=($(yq '.patches[].file' "$(dirname "$0")"/gecko-patches.yaml))
 
 ironfox_gecko_check_patch() {
-    patch="$patches/gecko/ironfox/$1"
+    patch="$ironfox_patches/$1"
     if ! [[ -f "$patch" ]]; then
         printf "${RED}✗ %-45s: FAILED${NC}\n" "$(basename "$patch")"
         echo "'$patch' does not exist or is not a file"
@@ -32,7 +32,7 @@ ironfox_gecko_check_patch() {
 }
 
 stremio_gecko_check_patch() {
-    patch="$patches/gecko/stremio-gecko/$1"
+    patch="$gecko_patches/$1"
     if ! [[ -f "$patch" ]]; then
         printf "${RED}✗ %-45s: FAILED${NC}\n" "$(basename "$patch")"
         echo "'$patch' does not exist or is not a file"
@@ -86,7 +86,7 @@ ironfox_gecko_apply_patch() {
     name="$1"
     echo "Applying patch: $name"
     stremio_gecko_check_patch "$name" || return 1
-    patch -p1 --no-backup-if-mismatch <"$patches/gecko/ironfox/$name"
+    patch -p1 --no-backup-if-mismatch <"$ironfox_patches/$name"
     return $?
 }
 
@@ -94,7 +94,7 @@ stremio_gecko_apply_patch() {
     name="$1"
     echo "Applying patch: $name"
     stremio_gecko_check_patch "$name" || return 1
-    patch -p1 --no-backup-if-mismatch <"$patches/gecko/stremio-gecko/$name"
+    patch -p1 --no-backup-if-mismatch <"$gecko_patches/$name"
     return $?
 }
 
