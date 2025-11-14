@@ -8,7 +8,7 @@ pref("app.update.url.manual", "https://github.com/richiedollar/stremio-gecko/rel
 pref("app.vendorURL", "https://github.com/richiedollar/stremio-gecko", locked);
 
 /// Configure uBlock Origin
-pref("browser.stremio-gecko.uBO.assetsBootstrapLocation", "https://raw.githubusercontent.com/richiedollar/stremio-gecko/main/uBlock/assets.json");
+pref("browser.stremio-gecko.uBO.assetsBootstrapLocation", "https://gitlab.com/celenityy/stremio-gecko/-/raw/main/uBlock/assets.json");
 pref("browser.stremio-gecko.uBO.autoCommentFilterTemplate", "{{url}}");
 pref("browser.stremio-gecko.uBO.autoUpdateDelayAfterLaunch", "10");
 pref("browser.stremio-gecko.uBO.disableWebAssembly", "true");

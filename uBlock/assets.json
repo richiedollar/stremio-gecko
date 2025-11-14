@@ -2,7 +2,7 @@
     "assets.json": {
         "content": "internal",
         "updateAfter": 1,
-        "contentURL": "https://raw.githubusercontent.com/richiedollar/stremio-gecko/main/uBlock/assets.json"
+        "contentURL": "https://gitlab.com/celenityy/stremio-gecko/-/raw/main/uBlock/assets.json"
     },
     "public_suffix_list.dat": {
         "content": "internal",
