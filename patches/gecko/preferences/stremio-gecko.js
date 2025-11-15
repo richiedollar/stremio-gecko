@@ -24,6 +24,9 @@ pref("browser.link.open_newwindow.override.external", 1);
 pref("browser.tabs.loadBookmarksInTabs", false); // [DEFAULT]
 pref("view_source.tab", false);
 
+// Improve Performance
+pref("gfx.webrender.all", true);
+
 /// Block permission prompts to access camera
 pref("permissions.default.camera", 2);
 
