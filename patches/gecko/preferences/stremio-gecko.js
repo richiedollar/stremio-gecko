@@ -431,13 +431,7 @@ pref("sidebar.verticalTabs", false); // [DEFAULT]
 /// Disable visual search
 pref("browser.search.visualSearch.featureGate", false);
 
-/// Disable WASM-Baseline JIT
-pref("javascript.options.wasm_baselinejit", false);
-
-/// Disable WASM debugger
-pref("devtools.debugger.features.wasm", false);
-
-/// Disable WASM for extensions
+/// Disable WebAssembly for extensions
 pref("javascript.options.wasm_trustedprincipals", false);
 
 /// Disable WebGL
@@ -496,6 +490,9 @@ pref("browser.download.enableDeletePrivate", false);
 
 /// Hide UI to switch search engines for individual searches
 pref("browser.urlbar.scotchBonnet.disableOneOffs", true); // [HIDDEN]
+
+/// Re-enable WebAssembly
+pref("javascript.options.wasm", true); // [DEFAULT]
 
 /// Remove default Search Engine Placeholders
 pref("browser.newtabpage.activity-stream.trendingSearch.defaultSearchEngine", ""); // [HIDDEN] [DEFAULT] [NIGHTLY]
