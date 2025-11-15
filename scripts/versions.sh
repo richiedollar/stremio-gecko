@@ -10,6 +10,7 @@ FIREFOX_RELEASE_TAG="FIREFOX_${FIREFOX_VERSION//./_}_RELEASE"
 FIREFOX_RELEASE_PATH="releases/${FIREFOX_VERSION}"
 IRONFOX_VERSION="v${FIREFOX_VERSION}"
 PHOENIX_TAG="2025.11.07.1"
+STREMIO_WEB_TAG="v5.0.0-beta.27"
 
 ## Neutron is a weird case - they don't have proper versioning, so we just specify the commit here
 NEUTRON_REVISION="64e14b9b3adac2a2c8d461348ee04c553dfd8305"
@@ -33,6 +34,7 @@ IRONFOXDIR="${SOURCESDIR}/ironfox"
 IRONFOXPATCHDIR="${IRONFOXDIR}/patches"
 NEUTRONDIR="${SOURCESDIR}/neutron"
 PHOENIXDIR="${SOURCESDIR}/phoenix"
+STREMIOWEBDIR="${SOURCESDIR}/stremio-web"
 
 # Use GNU Sed on macOS instead of the built-in sed, due to differences in syntax
 if [[ "$OSTYPE" == "darwin"* ]]; then

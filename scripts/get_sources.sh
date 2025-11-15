@@ -199,6 +199,10 @@ download "https://gitlab.com/celenityy/Phoenix/-/raw/$PHOENIX_TAG/unused/macos/p
 download "https://gitlab.com/celenityy/Phoenix/-/raw/$PHOENIX_TAG/unused/windows/phoenix.js" "$PHOENIXDIR/phoenix-windows.js"
 download "https://gitlab.com/celenityy/Phoenix/-/raw/$PHOENIX_TAG/unused/windows/phoenix-extended.js" "$PHOENIXDIR/phoenix-extended-windows.js"
 
+# Clone stremio-web
+echo "Cloning stremio-web..."
+clone_repo "https://github.com/Stremio/stremio-web.git" "$STREMIOWEBDIR" "${STREMIO_WEB_TAG}"
+
 # Clone Firefox
 echo "Cloning Firefox..."
 clone_repo "https://github.com/mozilla-firefox/firefox.git" "$GECKODIR" "${FIREFOX_RELEASE_TAG}"
@@ -216,6 +220,7 @@ export ironfox=${IRONFOXDIR}
 export ironfox_patches=${IRONFOXPATCHDIR}
 export neutron=${NEUTRONDIR}
 export phoenix=${PHOENIXDIR}
+export stremiowebdir=${STREMIOWEBDIR}
 
 source "\$rootdir/scripts/env_common.sh"
 EOF

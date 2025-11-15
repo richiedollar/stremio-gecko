@@ -213,11 +213,38 @@ $SED -i 's|"doh-providers"||g' toolkit/components/doh/DoHConfig.sys.mjs
 $SED -i 's|"doh-config"||g' toolkit/components/doh/DoHTestUtils.sys.mjs
 $SED -i 's|"doh-providers"||g' toolkit/components/doh/DoHTestUtils.sys.mjs
 
+# Remove built-in search engines
+$SED -i -e 's|% resource search-extensions|# % resource search-extensions|g' browser/components/search/jar.mn
+$SED -i -e 's|search-extensions/|# search-extensions/|g' browser/components/search/jar.mn
+rm -vrf browser/components/search/extensions
+
 # Remove the Clear Key CDM
 $SED -i -e 's|@RESPATH@/gmp-clearkey|; @RESPATH@/gmp-clearkey|g' browser/installer/package-manifest.in
 
+# Remove default permissions
+$SED -i -e 's|@RESPATH@/browser/defaults/permissions|; @RESPATH@/browser/defaults/permissions|g' browser/installer/package-manifest.in
+$SED -i -e 's|FINAL_TARGET_FILES.defaults += ["app/permissions"]|# FINAL_TARGET_FILES.defaults += ["app/permissions"]|g' browser/moz.build
+rm -vf browser/app/permissions
+
 # Remove the ping sender
 $SED -i -e 's|@BINPATH@/pingsender|; @BINPATH@/pingsender|g' browser/installer/package-manifest.in
+
+# Remove unwanted `about`` pages
+$SED -i -e "s|'asrouter'|# 'asrouter'|g" browser/components/about/components.conf
+$SED -i -e "s|'firefoxview'|# 'firefoxview'|g" browser/components/about/components.conf
+$SED -i -e "s|'logins'|# 'logins'|g" browser/components/about/components.conf
+$SED -i -e "s|'loginsimportreport'|# 'loginsimportreport'|g" browser/components/about/components.conf
+$SED -i -e "s|'messagepreview'|# 'messagepreview'|g" browser/components/about/components.conf
+$SED -i -e "s|'privatebrowsing'|# 'privatebrowsing'|g" browser/components/about/components.conf
+$SED -i -e "s|'profiling'|# 'profiling'|g" browser/components/about/components.conf
+$SED -i -e "s|'reader'|# 'reader'|g" browser/components/about/components.conf
+$SED -i -e "s|'sessionrestore'|# 'sessionrestore'|g" browser/components/about/components.conf
+$SED -i -e "s|'welcome'|# 'welcome'|g" browser/components/about/components.conf
+$SED -i -e "s|'welcomeback'|# 'welcomeback'|g" browser/components/about/components.conf
+$SED -i -e "s|'webrtc'|# 'webrtc'|g" docshell/build/components.conf
+
+$SED -i -e "s|about_pages.append('translations')|# about_pages.append('translations')|g" docshell/build/components.conf
+$SED -i -e "s|about_pages.append('webauthn')|# about_pages.append('webauthn')|g" docshell/build/components.conf
 
 # Remove unwanted/unused local dumps
 

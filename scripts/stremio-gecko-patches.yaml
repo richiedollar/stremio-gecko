@@ -17,6 +17,12 @@ categories:
       Focused on user empowerment, these patches provide access to advanced or hidden configuration options
       such as about:config or secret developer settings to allow deeper browser customization.
 
+  - name: "User Interface"
+    excerpt: "Visual and interface customizations for branding and clarity."
+    description: >
+      UI-focused patches customize the appearance of the browser, introduce branding changes,
+      and simplify or declutter interface elements to enhance user clarity and recognition.
+
 patches:
   # Mozilla
   - file: "gecko-remove-normandy.patch"
@@ -41,3 +47,11 @@ patches:
     reason: "To allow users to disable the add-on blocklist if desired."
     effect: "Users remain in control over their experience."
     category: "User Control"
+
+  # User Interface
+  - file: "gecko-remove-unwanted-about-pages.patch"
+    name: "Remove unwanted `about:` pages"
+    description: "Removes unwanted `about:` pages."
+    reason: "To improve UX."
+    effect: "Prevents cluttering the UI and exposing `about:` pages that are not supported."
+    category: "User Interface"
