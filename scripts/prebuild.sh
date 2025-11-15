@@ -58,6 +58,13 @@ mkdir -vp "$rootdir/build"
 # Check patch files
 source "$rootdir/scripts/patches.sh"
 
+pushd "$stremioweb"
+if ! stremio_web_check_patches; then
+    echo "Patch validation failed. Please check the patch files and try again."
+    exit 1
+fi
+popd
+
 pushd "$gecko"
 if ! ironfox_gecko_check_patches; then
     echo "Patch validation failed. Please check the patch files and try again."
@@ -76,6 +83,23 @@ if [[ -n ${FDROID_BUILD+x} ]]; then
 else
     curl --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -sSf https://sh.rustup.rs | sh -s -- -y --no-update-default-toolchain
 fi
+
+# stremio-web
+pushd "$stremioweb"
+
+# Apply patches
+stremio_web_apply_patches
+
+# Install + update NPM dependencies
+npm install
+npm update
+npm audit fix --force
+
+# Remove unwanted/unused resources
+rm -vf .well-known/apple-app-site-association
+rm -vrf src/services/Chromecast
+
+popd
 
 source "$CARGO_HOME/env"
 rustup default "$RUST_VERSION"
@@ -455,18 +479,5 @@ source "$rootdir/scripts/noop_mozilla_endpoints.sh"
 # Apply Gecko overlay
 apply_overlay "$gecko_patches/gecko-overlay/"
 apply_overlay "$neutron/"
-
-popd
-
-# stremio-web
-pushd "$stremioweb"
-
-# Apply patches
-stremio_web_apply_patches
-
-# Install + update NPM dependencies
-npm install
-npm update
-npm audit fix --force
 
 popd

@@ -1,0 +1,43 @@
+diff --git a/package.json b/package.json
+index 9539d11..41199d1 100644
+--- a/package.json
++++ b/package.json
+@@ -15,7 +15,6 @@
+     },
+     "dependencies": {
+         "@babel/runtime": "7.26.0",
+-        "@sentry/browser": "8.42.0",
+         "@stremio/stremio-colors": "5.2.0",
+         "@stremio/stremio-core-web": "0.49.4",
+         "@stremio/stremio-icons": "5.7.1",
+diff --git a/src/index.js b/src/index.js
+index c55a1b1..84d6093 100755
+--- a/src/index.js
++++ b/src/index.js
+@@ -1,9 +1,9 @@
+ // Copyright (C) 2017-2023 Smart code 203358507
+ 
+-if (typeof process.env.SENTRY_DSN === 'string') {
+-    const Sentry = require('@sentry/browser');
+-    Sentry.init({ dsn: process.env.SENTRY_DSN });
+-}
++// if (typeof process.env.SENTRY_DSN === 'string') {
++//     const Sentry = require('@sentry/browser');
++//     Sentry.init({ dsn: process.env.SENTRY_DSN });
++// }
+ 
+ const Bowser = require('bowser');
+ const browser = Bowser.parse(window.navigator?.userAgent || '');
+diff --git a/webpack.config.js b/webpack.config.js
+index ea16855..65b8531 100644
+--- a/webpack.config.js
++++ b/webpack.config.js
+@@ -211,7 +211,7 @@ module.exports = (env, argv) => ({
+     plugins: [
+         new webpack.ProgressPlugin(),
+         new webpack.EnvironmentPlugin({
+-            SENTRY_DSN: null,
++//            SENTRY_DSN: null,
+             ...env,
+             DEBUG: argv.mode !== 'production',
+             VERSION: pachageJson.version,

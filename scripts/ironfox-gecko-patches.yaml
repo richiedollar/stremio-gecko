@@ -15,7 +15,7 @@ categories:
     excerpt: "Enhancements that improve user privacy and strengthen data protection."
     description: >
       This category includes patches that protect against various forms of tracking, as well as patches that limit
-      data exposure and reduce the browser's required permissions.
+      data exposure.
 
   - name: "Security"
     excerpt: "Patches that improve default security settings and reduce attack surfaces."

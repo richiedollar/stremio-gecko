@@ -1,0 +1,29 @@
+categories:
+  - name: "Privacy"
+    excerpt: "Enhancements that improve user privacy and strengthen data protection."
+    description: >
+      This category includes patches that protect against various forms of tracking, as well as patches that limit
+      data exposure.
+
+patches:
+  # Privacy
+  - file: "stremio-web-liberate.patch"
+    name: "Remove third-party scripts"
+    description: "Prevents Stremio from loading third-party scripts from Apple and Google."
+    reason: "To prevent tracking, limit reliance on third-party services, improve performance, reduce attack surface, and reduce network activity."
+    effect: "Protects users against tracking."
+    category: "Privacy"
+
+  - file: "stremio-web-remove-google-cast-sdk.patch"
+    name: "Remove Google Cast SDK"
+    description: "Removes the Google Cast SDK from Stremio."
+    reason: "To prevent tracking, limit reliance on third-party services, improve performance, and reduce attack surface."
+    effect: "Improves the privacy and security of users."
+    category: "Privacy"
+
+  - file: "stremio-web-remove-sentry.patch"
+    name: "Remove Sentry"
+    description: "Removes the Sentry tracking library from Stremio."
+    reason: "To prevent tracking, limit reliance on third-party services, improve performance, and reduce attack surface."
+    effect: "Protects users against tracking."
+    category: "Privacy"

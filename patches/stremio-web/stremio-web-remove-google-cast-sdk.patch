@@ -1,0 +1,208 @@
+diff --git a/src/App/App.js b/src/App/App.js
+index 3e816be..6eff2e5 100644
+--- a/src/App/App.js
++++ b/src/App/App.js
+@@ -4,7 +4,7 @@ require('spatial-navigation-polyfill');
+ const React = require('react');
+ const { useTranslation } = require('react-i18next');
+ const { Router } = require('stremio-router');
+-const { Core, Shell, Chromecast, DragAndDrop, KeyboardShortcuts, ServicesProvider } = require('stremio/services');
++const { Core, Shell, DragAndDrop, KeyboardShortcuts, ServicesProvider } = require('stremio/services');
+ const { NotFound } = require('stremio/routes');
+ const { FileDropProvider, PlatformProvider, ToastProvider, TooltipProvider, CONSTANTS, withCoreSuspender, useShell } = require('stremio/common');
+ const ServicesToaster = require('./ServicesToaster');
+@@ -32,7 +32,7 @@ const App = () => {
+         return {
+             core,
+             shell: new Shell(),
+-            chromecast: new Chromecast(),
++//            chromecast: new Chromecast(),
+             keyboardShortcuts: new KeyboardShortcuts(),
+             dragAndDrop: new DragAndDrop({ core })
+         };
+@@ -67,7 +67,7 @@ const App = () => {
+                 (services.shell.active || services.shell.error instanceof Error)
+             );
+         };
+-        const onChromecastStateChange = () => {
++/*        const onChromecastStateChange = () => {
+             if (services.chromecast.active) {
+                 services.chromecast.transport.setOptions({
+                     receiverApplicationId: CONSTANTS.CHROMECAST_RECEIVER_APP_ID,
+@@ -77,25 +77,25 @@ const App = () => {
+                     androidReceiverCompatible: true
+                 });
+             }
+-        };
++        };*/
+         services.core.on('stateChanged', onCoreStateChanged);
+         services.shell.on('stateChanged', onShellStateChanged);
+-        services.chromecast.on('stateChanged', onChromecastStateChange);
++//        services.chromecast.on('stateChanged', onChromecastStateChange);
+         services.core.start();
+         services.shell.start();
+-        services.chromecast.start();
++//        services.chromecast.start();
+         services.keyboardShortcuts.start();
+         services.dragAndDrop.start();
+         window.services = services;
+         return () => {
+             services.core.stop();
+             services.shell.stop();
+-            services.chromecast.stop();
++//            services.chromecast.stop();
+             services.keyboardShortcuts.stop();
+             services.dragAndDrop.stop();
+             services.core.off('stateChanged', onCoreStateChanged);
+             services.shell.off('stateChanged', onShellStateChanged);
+-            services.chromecast.off('stateChanged', onChromecastStateChange);
++//            services.chromecast.off('stateChanged', onChromecastStateChange);
+         };
+     }, []);
+ 
+diff --git a/src/common/CONSTANTS.js b/src/common/CONSTANTS.js
+index 92d0098..157f23e 100644
+--- a/src/common/CONSTANTS.js
++++ b/src/common/CONSTANTS.js
+@@ -1,6 +1,6 @@
+ // Copyright (C) 2017-2023 Smart code 203358507
+ 
+-const CHROMECAST_RECEIVER_APP_ID = '1634F54B';
++// const CHROMECAST_RECEIVER_APP_ID = '1634F54B';
+ const DEFAULT_STREAMING_SERVER_URL = 'http://127.0.0.1:11470/';
+ const SUBTITLES_SIZES = [75, 100, 125, 150, 175, 200, 250];
+ const SUBTITLES_FONTS = ['PlusJakartaSans', 'Arial', 'Halvetica', 'Times New Roman', 'Verdana', 'Courier', 'Lucida Console', 'sans-serif', 'serif', 'monospace'];
+@@ -109,7 +109,7 @@ const WHITELISTED_HOSTS = ['stremio.com', 'strem.io', 'stremio.zendesk.com', 'go
+ const PROTOCOL = 'stremio:';
+ 
+ module.exports = {
+-    CHROMECAST_RECEIVER_APP_ID,
++//    CHROMECAST_RECEIVER_APP_ID,
+     DEFAULT_STREAMING_SERVER_URL,
+     SUBTITLES_SIZES,
+     SUBTITLES_FONTS,
+diff --git a/src/routes/Player/ControlBar/ControlBar.js b/src/routes/Player/ControlBar/ControlBar.js
+index ba72103..6e27eae 100644
+--- a/src/routes/Player/ControlBar/ControlBar.js
++++ b/src/routes/Player/ControlBar/ControlBar.js
+@@ -43,9 +43,9 @@ const ControlBar = ({
+     onTouchEnd,
+     ...props
+ }) => {
+-    const { chromecast } = useServices();
++//    const { chromecast } = useServices();
+     const platform = usePlatform();
+-    const [chromecastServiceActive, setChromecastServiceActive] = React.useState(() => chromecast.active);
++//    const [chromecastServiceActive, setChromecastServiceActive] = React.useState(() => chromecast.active);
+     const [buttonsMenuOpen, , , toggleButtonsMenu] = useBinaryState(false);
+     const onSubtitlesButtonMouseDown = React.useCallback((event) => {
+         event.nativeEvent.subtitlesMenuClosePrevented = true;
+@@ -92,7 +92,7 @@ const ControlBar = ({
+             }
+         }
+     }, [muted, onMuteRequested, onUnmuteRequested]);
+-    const onChromecastButtonClick = React.useCallback(() => {
++/*    const onChromecastButtonClick = React.useCallback(() => {
+         chromecast.transport.requestSession();
+     }, []);
+     React.useEffect(() => {
+@@ -103,7 +103,7 @@ const ControlBar = ({
+         return () => {
+             chromecast.off('stateChanged', onStateChanged);
+         };
+-    }, []);
++    }, []);*/
+     return (
+         <div {...props} onTouchStart={props.onMouseOver} onTouchMove={props.onMouseMove} onTouchEnd={onTouchEnd} className={classnames(className, styles['control-bar-container'])}>
+             <SeekBar
+@@ -159,9 +159,9 @@ const ControlBar = ({
+                     <Button className={classnames(styles['control-bar-button'], { 'disabled': playbackSpeed === null })} tabIndex={-1} onMouseDown={onSpeedButtonMouseDown} onClick={onToggleSpeedMenu}>
+                         <Icon className={styles['icon']} name={'speed'} />
+                     </Button>
+-                    <Button className={classnames(styles['control-bar-button'], { 'disabled': !chromecastServiceActive })} tabIndex={-1} onClick={onChromecastButtonClick}>
+-                        <Icon className={styles['icon']} name={'cast'} />
+-                    </Button>
++//                    <Button className={classnames(styles['control-bar-button'], { 'disabled': !chromecastServiceActive })} tabIndex={-1} onClick={onChromecastButtonClick}>
++//                        <Icon className={styles['icon']} name={'cast'} />
++//                    </Button>
+                     <Button className={classnames(styles['control-bar-button'], { 'disabled': !Array.isArray(subtitlesTracks) || subtitlesTracks.length === 0 })} tabIndex={-1} onMouseDown={onSubtitlesButtonMouseDown} onClick={onToggleSubtitlesMenu}>
+                         <Icon className={styles['icon']} name={'subtitles'} />
+                     </Button>
+diff --git a/src/routes/Player/Player.js b/src/routes/Player/Player.js
+index 436f1a7..8f56417 100644
+--- a/src/routes/Player/Player.js
++++ b/src/routes/Player/Player.js
+@@ -47,9 +47,9 @@ const Player = ({ urlParams, queryParams }) => {
+ 
+     const [seeking, setSeeking] = React.useState(false);
+ 
+-    const [casting, setCasting] = React.useState(() => {
+-        return services.chromecast.active && services.chromecast.transport.getCastState() === cast.framework.CastState.CONNECTED;
+-    });
++//    const [casting, setCasting] = React.useState(() => {
++//        return services.chromecast.active && services.chromecast.transport.getCastState() === cast.framework.CastState.CONNECTED;
++//    });
+     const playbackDevices = React.useMemo(() => streamingServer.playbackDevices !== null && streamingServer.playbackDevices.type === 'Ready' ? streamingServer.playbackDevices.content : [], [streamingServer]);
+ 
+     const bufferingRef = React.useRef();
+@@ -354,7 +354,7 @@ const Player = ({ urlParams, queryParams }) => {
+                     null,
+                 seriesInfo: player.seriesInfo,
+             }, {
+-                chromecastTransport: services.chromecast.active ? services.chromecast.transport : null,
++//                chromecastTransport: services.chromecast.active ? services.chromecast.transport : null,
+                 shellTransport: services.shell.active ? services.shell.transport : null,
+             });
+         }
+@@ -490,7 +490,7 @@ const Player = ({ urlParams, queryParams }) => {
+         }
+     }, [video.state.playbackSpeed]);
+ 
+-    React.useEffect(() => {
++/*    React.useEffect(() => {
+         const toastFilter = (item) => item?.dataset?.type === 'CoreEvent';
+         toast.addFilter(toastFilter);
+         const onCastStateChange = () => {
+@@ -524,7 +524,7 @@ const Player = ({ urlParams, queryParams }) => {
+                 );
+             }
+         };
+-    }, []);
++    }, []);*/
+ 
+     React.useEffect(() => {
+         if (settings.pauseOnMinimize && (shell.windowClosed || shell.windowHidden)) {
+diff --git a/src/services/index.js b/src/services/index.js
+index 84cfcc8..384cca2 100644
+--- a/src/services/index.js
++++ b/src/services/index.js
+@@ -1,6 +1,6 @@
+ // Copyright (C) 2017-2023 Smart code 203358507
+ 
+-const Chromecast = require('./Chromecast');
++// const Chromecast = require('./Chromecast');
+ const Core = require('./Core');
+ const DragAndDrop = require('./DragAndDrop');
+ const KeyboardShortcuts = require('./KeyboardShortcuts');
+@@ -8,7 +8,7 @@ const { ServicesProvider, useServices } = require('./ServicesContext');
+ const Shell = require('./Shell');
+ 
+ module.exports = {
+-    Chromecast,
++//    Chromecast,
+     Core,
+     DragAndDrop,
+     KeyboardShortcuts,
+diff --git a/src/services/ServicesContext/types.d.ts b/src/services/ServicesContext/types.d.ts
+index 4321557..a4feb14 100644
+--- a/src/services/ServicesContext/types.d.ts
++++ b/src/services/ServicesContext/types.d.ts
+@@ -1,7 +1,7 @@
+ type ServicesContext = {
+     core: Core,
+     shell: any,
+-    chromecast: any,
++//    chromecast: any,
+     keyboardShortcuts: any,
+     dragAndDrop: any,
+ };
