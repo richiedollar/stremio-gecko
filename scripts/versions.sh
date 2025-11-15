@@ -35,6 +35,7 @@ IRONFOXPATCHDIR="${IRONFOXDIR}/patches"
 NEUTRONDIR="${SOURCESDIR}/neutron"
 PHOENIXDIR="${SOURCESDIR}/phoenix"
 STREMIOWEBDIR="${SOURCESDIR}/stremio-web"
+STREMIOWEBPATCHDIR="${PATCHDIR}/stremio-web"
 
 # Use GNU Sed on macOS instead of the built-in sed, due to differences in syntax
 if [[ "$OSTYPE" == "darwin"* ]]; then

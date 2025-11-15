@@ -220,7 +220,8 @@ export ironfox=${IRONFOXDIR}
 export ironfox_patches=${IRONFOXPATCHDIR}
 export neutron=${NEUTRONDIR}
 export phoenix=${PHOENIXDIR}
-export stremiowebdir=${STREMIOWEBDIR}
+export stremioweb=${STREMIOWEBDIR}
+export stremioweb_patches=${STREMIOWEBPATCHDIR}
 
 source "\$rootdir/scripts/env_common.sh"
 EOF

@@ -13,8 +13,10 @@ NC="\033[0m"
 
 declare -a IRONFOX_GECKO_PATCH_FILES
 declare -a STREMIO_GECKO_PATCH_FILES
+declare -a STREMIO_WEB_PATCH_FILES
 IRONFOX_GECKO_PATCH_FILES=($(yq '.patches[].file' "$(dirname "$0")"/ironfox-patches.yaml))
-STREMIO_GECKO_PATCH_FILES=($(yq '.patches[].file' "$(dirname "$0")"/gecko-patches.yaml))
+STREMIO_GECKO_PATCH_FILES=($(yq '.patches[].file' "$(dirname "$0")"/stremio-gecko-patches.yaml))
+STREMIO_GECKO_PATCH_FILES=($(yq '.patches[].file' "$(dirname "$0")"/stremio-web-patches.yaml))
 
 ironfox_gecko_check_patch() {
     patch="$ironfox_patches/$1"
@@ -46,6 +48,21 @@ stremio_gecko_check_patch() {
     fi
 }
 
+stremio_web_check_patch() {
+    patch="$stremioweb_patches/$1"
+    if ! [[ -f "$patch" ]]; then
+        printf "${RED}✗ %-45s: FAILED${NC}\n" "$(basename "$patch")"
+        echo "'$patch' does not exist or is not a file"
+        return 1
+    fi
+
+    if ! patch -p1 -f --dry-run <"$patch"; then
+        printf "${RED}✗ %-45s: FAILED${NC}\n" "$(basename "$patch")"
+        echo "Incompatible patch: '$patch'"
+        return 1
+    fi
+}
+
 ironfox_gecko_check_patches() {
     for patch in "${IRONFOX_GECKO_PATCH_FILES[@]}"; do
         if ! ironfox_gecko_check_patch "$patch"; then
@@ -57,6 +74,14 @@ ironfox_gecko_check_patches() {
 stremio_gecko_check_patches() {
     for patch in "${STREMIO_GECKO_PATCH_FILES[@]}"; do
         if ! stremio_gecko_check_patch "$patch"; then
+            return 1
+        fi
+    done
+}
+
+stremio_web_check_patches() {
+    for patch in "${STREMIO_WEB_PATCH_FILES[@]}"; do
+        if ! stremio_web_check_patch "$patch"; then
             return 1
         fi
     done
@@ -82,6 +107,16 @@ stremio_gecko_test_patches() {
     done
 }
 
+stremio_web_test_patches() {
+    for patch in "${STREMIO_WEB_PATCH_FILES[@]}"; do
+        if ! stremio_web_check_patch "$patch" >/dev/null 2>&1; then
+            printf "${RED}✗ %-45s: FAILED${NC}\n" "$(basename "$patch")"
+        else
+            printf "${GREEN}✓ %-45s: OK${NC}\n" "$(basename "$patch")"
+        fi
+    done
+}
+
 ironfox_gecko_apply_patch() {
     name="$1"
     echo "Applying patch: $name"
@@ -95,6 +130,14 @@ stremio_gecko_apply_patch() {
     echo "Applying patch: $name"
     stremio_gecko_check_patch "$name" || return 1
     patch -p1 --no-backup-if-mismatch <"$gecko_patches/$name"
+    return $?
+}
+
+stremio_web_apply_patch() {
+    name="$1"
+    echo "Applying patch: $name"
+    stremio_web_check_patch "$name" || return 1
+    patch -p1 --no-backup-if-mismatch <"$stremioweb_patches/$name"
     return $?
 }
 
@@ -118,6 +161,16 @@ stremio_gecko_apply_patches() {
     done
 }
 
+stremio_web_apply_patches() {
+    for patch in "${STREMIO_WEB_PATCH_FILES[@]}"; do
+        if ! stremio_web_apply_patch "$patch"; then
+            printf "${RED}✗ %-45s: FAILED${NC}\n" "$(basename "$patch")"
+            echo "Failed to apply $patch"
+            return 1
+        fi
+    done
+}
+
 ironfox_gecko_list_patches() {
     for patch in "${IRONFOX_GECKO_PATCH_FILES[@]}"; do
         echo "$patch"
@@ -126,6 +179,12 @@ ironfox_gecko_list_patches() {
 
 stremio_gecko_list_patches() {
     for patch in "${STREMIO_GECKO_PATCH_FILES[@]}"; do
+        echo "$patch"
+    done
+}
+
+stremio_web_list_patches() {
+    for patch in "${STREMIO_WEB_PATCH_FILES[@]}"; do
         echo "$patch"
     done
 }

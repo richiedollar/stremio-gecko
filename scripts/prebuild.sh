@@ -457,3 +457,16 @@ apply_overlay "$gecko_patches/gecko-overlay/"
 apply_overlay "$neutron/"
 
 popd
+
+# stremio-web
+pushd "$stremioweb"
+
+# Apply patches
+stremio_web_apply_patches
+
+# Install + update NPM dependencies
+npm install
+npm update
+npm audit fix --force
+
+popd
