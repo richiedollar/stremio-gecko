@@ -84,11 +84,13 @@
     "DisableFirefoxStudies": true,
     "DisableFormHistory": true,
     "DisableMasterPasswordCreation": true,
-    "DisablePrivateBrowsing": false,
+    "DisablePrivateBrowsing": true,
     "DisableProfileImport": true,
     "DisableProfileRefresh": true,
     "DisableSetDesktopBackground": true,
     "DisableTelemetry": true,
+    "DisplayBookmarksToolbar": "never",
+    "DisplayMenuBar": "never",
     "DNSOverHTTPS": {
       "Enabled": true,
       "Fallback": false,
@@ -903,6 +905,7 @@
     },
     "ManualAppUpdateOnly": true,
     "MicrosoftEntraSSO": false,
+    "NewTabPage": false,
     "NoDefaultBookmarks": true,
     "OfferToSaveLogins": false,
     "OverridePostUpdatePage": "",
@@ -936,11 +939,12 @@
       "Locked": false
     },
     "PrintingEnabled": false,
-    "PrivateBrowsingModeAvailability": 0,
+    "PrivateBrowsingModeAvailability": 1,
     "Proxy": {
       "Mode": "none",
       "UseProxyForDNS": true
     },
+    "SearchBar": "unified",
     "SearchEngines": {
       "Add": [
         {
@@ -955,6 +959,7 @@
       "PreventInstalls": true
     },
     "SearchSuggestEnabled": false,
+    "ShowHomeButton": false,
     "SkipTermsOfUse": true,
     "SupportMenu": {
       "Title": "stremio-gecko Issue Tracker",
